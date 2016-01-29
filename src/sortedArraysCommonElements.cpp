@@ -13,15 +13,45 @@ ERROR CASES: Return NULL for invalid inputs.
 
 NOTES:
 */
-
 #include <iostream>
 
-struct transaction {
+struct transaction
+{
 	int amount;
 	char date[11];
 	char description[20];
 };
 
-struct transaction * sortedArraysCommonElements(struct transaction *A, int ALen, struct transaction *B, int BLen) {
-	return NULL;
+int isEqual(char *string1, char *string2)
+{
+	while (*string1&&*string2)
+	{
+		if (*string1 != *string2)
+			return 0;
+		string1++;
+		string2++;
+	}
+	if (!(*string1 || *string2))
+		return 1;
+	else
+		return 0;
+}
+
+struct transaction * sortedArraysCommonElements(struct transaction *A, int ALen, struct transaction *B, int BLen)
+{
+	struct transaction *result = NULL;
+	int i, j, RLen = 0;
+	for (i = 0; i < ALen && A != NULL; i++)
+	{
+		for (j = i; j < BLen && B != NULL; j++)
+		{
+			if (isEqual(A[i].date, B[j].date))
+			{
+				RLen++;
+				result = (struct transaction *)realloc(result, RLen*sizeof(struct transaction));
+				result[RLen - 1] = A[i];
+			}
+		}
+	}
+	return result;
 }
